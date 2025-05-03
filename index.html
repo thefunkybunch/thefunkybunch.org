@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RE Team Workspace - Classic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* --- Classic Windows Style Overrides --- */
+
+        body {
+            /* Classic system font, fallback to Segoe UI */
+            font-family: Tahoma, 'MS Sans Serif', 'Segoe UI', sans-serif;
+            font-size: 13px; /* Classic font size */
+            background-color: #C0C0C0; /* Standard Windows gray background */
+            color: #000000; /* Black text */
+        }
+
+        /* --- Menu Bar --- */
+        .menu-bar {
+            background-color: #C0C0C0; /* Same as body background */
+            height: 28px; /* Slightly taller menu */
+            padding: 2px 4px;
+            border-bottom: 1px solid #808080; /* Darker gray bottom border */
+            display: flex;
+            align-items: center;
+        }
+        .menu-item {
+            padding: 2px 6px;
+            margin-right: 2px;
+            cursor: default; /* Default cursor for menu items */
+            border: 1px solid transparent; /* For hover effect */
+        }
+        .menu-item:hover {
+            background-color: #000080; /* Classic Windows highlight blue */
+            color: #FFFFFF; /* White text on hover */
+            border: 1px solid #000080;
+        }
+        .menu-item-active { /* Style for when a menu is 'open' (not implemented here) */
+             background-color: #e0e0e0;
+             border: 1px solid #808080;
+        }
+
+        /* --- Main Layout Area --- */
+        .main-layout-container {
+            height: calc(100vh - 28px); /* Full height minus menu bar */
+            padding: 2px; /* Small padding around the grid */
+            background-color: #C0C0C0; /* Match body background */
+        }
+        .main-layout-grid {
+             height: 100%;
+             /* Tailwind grid classes will be applied directly */
+        }
+
+        /* --- Panels/Panes --- */
+        .re-panel {
+            background-color: #FFFFFF; /* White panel background */
+            /* Classic 3D border effect */
+            border-top: 1px solid #FFFFFF;
+            border-left: 1px solid #FFFFFF;
+            border-right: 1px solid #808080; /* Dark gray */
+            border-bottom: 1px solid #808080; /* Dark gray */
+            overflow: hidden; /* Hide overflow, rely on inner content scroll */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .re-panel-title {
+            /* Classic window title bar blue */
+            background-color: #000080; /* Navy blue */
+            color: #FFFFFF; /* White text */
+            padding: 3px 6px;
+            font-weight: bold;
+            font-size: 12px; /* Slightly smaller title font */
+            border-bottom: 1px solid #000080;
+            flex-shrink: 0;
+            cursor: default; /* Indicate it's not directly interactive */
+        }
+
+        .re-panel-content {
+            padding: 5px; /* Slightly less padding */
+            flex-grow: 1;
+            overflow-y: auto; /* Scroll content vertically */
+            /* Add subtle inset border for content area */
+            border-top: 1px solid #808080;
+            border-left: 1px solid #808080;
+            border-right: 1px solid #FFFFFF;
+            border-bottom: 1px solid #FFFFFF;
+            margin: 2px; /* Margin to show the panel border */
+        }
+
+        /* --- Table Styling --- */
+        .re-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #FFFFFF; /* Ensure table bg is white */
+        }
+        .re-table th, .re-table td {
+            border: 1px solid #C0C0C0; /* Lighter gray borders */
+            padding: 3px 5px; /* Adjust padding */
+            text-align: left;
+            font-size: 12px; /* Smaller font in tables */
+            vertical-align: top; /* Align content top */
+        }
+        .re-table th {
+            background-color: #C0C0C0; /* Gray header */
+            font-weight: normal; /* Classic headers often not bold */
+            border-top: 1px solid #FFFFFF;
+            border-left: 1px solid #FFFFFF;
+            border-right: 1px solid #808080;
+            border-bottom: 1px solid #808080;
+            padding: 4px 5px;
+        }
+        /* Remove zebra striping for a more classic look */
+        .re-table tr:nth-child(even) {
+            background-color: #FFFFFF;
+        }
+        .re-table tr:hover td { /* Subtle hover */
+             background-color: #E8E8E8;
+        }
+
+        /* --- List Styling --- */
+        .re-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .re-list li {
+            padding: 2px 4px; /* Tighter padding */
+            border: 1px solid transparent; /* Border for selection highlight */
+            font-size: 12px;
+            cursor: default;
+        }
+        .re-list li:hover {
+             /* Classic selection style */
+             background-color: #000080;
+             color: #FFFFFF;
+             border: 1px dotted #FFFFFF; /* Dotted border inside selection */
+        }
+        /* Style for tree-like structure */
+        .re-list .indent-1 { padding-left: 16px; }
+        .re-list .indent-2 { padding-left: 28px; }
+        .re-list .icon { /* Placeholder for +/- icons */
+            display: inline-block;
+            width: 12px;
+            text-align: center;
+            margin-right: 3px;
+        }
+
+
+        /* --- Scrollbar Styling (Optional, Webkit specific) --- */
+        /* For a more authentic feel, but less cross-browser compatible */
+        ::-webkit-scrollbar {
+            width: 16px;
+            height: 16px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #DFDFDF; /* Scrollbar track */
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #C0C0C0; /* Scrollbar handle */
+            border-top: 1px solid #FFFFFF;
+            border-left: 1px solid #FFFFFF;
+            border-right: 1px solid #808080;
+            border-bottom: 1px solid #808080;
+        }
+         ::-webkit-scrollbar-button { /* Style the up/down arrows */
+            background-color: #C0C0C0;
+            border-top: 1px solid #FFFFFF;
+            border-left: 1px solid #FFFFFF;
+            border-right: 1px solid #808080;
+            border-bottom: 1px solid #808080;
+            display: block;
+            height: 16px;
+            width: 16px;
+        }
+         /* Basic arrow symbols (would ideally use images/SVG for real look) */
+        ::-webkit-scrollbar-button:vertical:decrement { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='black'><polygon points='8,4 12,12 4,12'/></svg>"); background-repeat: no-repeat; background-position: center center; }
+        ::-webkit-scrollbar-button:vertical:increment { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='black'><polygon points='8,12 12,4 4,4'/></svg>"); background-repeat: no-repeat; background-position: center center; }
+        ::-webkit-scrollbar-button:horizontal:decrement { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='black'><polygon points='12,8 4,12 4,4'/></svg>"); background-repeat: no-repeat; background-position: center center; }
+        ::-webkit-scrollbar-button:horizontal:increment { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='black'><polygon points='4,8 12,12 12,4'/></svg>"); background-repeat: no-repeat; background-position: center center; }
+
+
+        /* --- General --- */
+        /* Ensure layout fills height */
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden; /* Prevent body scroll */
+        }
+        /* Monospace font for code/hex */
+        .font-mono {
+            font-family: Consolas, 'Courier New', monospace;
+        }
+
+    </style>
+</head>
+<body> <div class="menu-bar">
+        <span class="menu-item font-bold"><u>F</u>ile</span> <span class="menu-item"><u>E</u>dit</span>
+        <span class="menu-item"><u>V</u>iew</span>
+        <span class="menu-item"><u>A</u>nalysis</span>
+        <span class="menu-item"><u>T</u>ools</span>
+        <span class="menu-item"><u>W</u>indow</span>
+        <span class="menu-item"><u>H</u>elp</span>
+    </div>
+
+    <div class="main-layout-container">
+        <div class="main-layout-grid grid grid-cols-12 grid-rows-6 gap-1 h-full">
+
+            <div class="re-panel col-span-2 row-span-6">
+                <div class="re-panel-title">Project Files</div>
+                <div class="re-panel-content">
+                    <ul class="re-list">
+                        <li><span class="icon">[-]</span>binary_executable</li>
+                        <li class="indent-1"><span class="icon">[+]</span>Headers</li>
+                        <li class="indent-1"><span class="icon">[-]</span>Sections</li>
+                        <li class="indent-2"><span class="icon"> </span>.text</li>
+                        <li class="indent-2"><span class="icon"> </span>.data</li>
+                        <li class="indent-2"><span class="icon"> </span>.bss</li>
+                        <li class="indent-2"><span class="icon"> </span>.reloc</li>
+                        <li class="indent-1"><span class="icon">[+]</span>Imports</li>
+                        <li class="indent-1"><span class="icon">[+]</span>Exports</li>
+                        <li><span class="icon">[-]</span>library_1.dll</li>
+                        <li><span class="icon">[-]</span>library_2.so</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="re-panel col-span-5 row-span-4">
+                <div class="re-panel-title">Disassembly: .user section</div>
+                <div class="re-panel-content">
+                    <table class="re-table font-mono text-xs">
+                        <thead>
+                            <tr><th>Address</th><th>Bytes</th><th>Instruction</th><th>Comment</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>0x401000</td><td>55</td><td>push ebp</td><td>; Entry point</td></tr>
+                            <tr><td>0x401001</td><td>89 E5</td><td>mov ebp, esp</td><td></td></tr>
+                            <tr><td>0x401003</td><td>83 EC 10</td><td>sub esp, 0x10</td><td>; Allocate stack space</td></tr>
+                            <tr><td>0x401006</td><td>C7 45 FC 00</td><td>mov dword [ebp-0x4], 0x0</td><td>; Initialize variable</td></tr>
+                            <tr><td>0x40100D</td><td>E8 1E 00 00 00</td><td>call 0x401030</td><td>; Call function_xyz</td></tr>
+                            <tr><td>0x401012</td><td>8B 45 FC</td><td>mov eax, [ebp-0x4]</td><td></td></tr>
+                            <tr><td>0x401015</td><td>83 C0 01</td><td>add eax, 0x1</td><td></td></tr>
+                            <tr><td>0x401018</td><td>89 45 FC</td><td>mov [ebp-0x4], eax</td><td></td></tr>
+                            <tr><td>0x40101B</td><td>EB 0A</td><td>jmp 0x401027</td><td></td></tr>
+                            <tr><td>0x40101D</td><td>B8 01 00 00 00</td><td>mov eax, 0x1</td><td>; Return value</td></tr>
+                            <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="re-panel col-span-5 row-span-4">
+                <div class="re-panel-title">Decompiler: about()</div>
+                <div class="re-panel-content">
+                    <pre class="font-mono text-xs whitespace-pre-wrap"><code>// Decompiled C-like code
+int main(int argc, char **argv) {
+    int local_var_1;
+
+    local_var_1 = 0;
+    function_xyz("some_string", argc); // Potential call
+
+    while (local_var_1 < 10) {
+        if (check_condition(local_var_1)) {
+             break;
+        }
+        local_var_1 = local_var_1 + 1;
+    }
+
+    return 1; // Default return
+}
+
+void function_xyz(char *param_1, int param_2) {
+    // ... function body ...
+    printf("Parameter 1: %s\n", param_1);
+    if (param_2 > 1) {
+        puts("Multiple arguments provided.");
+    }
+    // ... more code ...
+}
+                </code></pre>
+                </div>
+            </div>
+
+            <div class="re-panel col-span-7 row-span-2">
+                <div class="re-panel-title">Hex View: 0x401000</div>
+                <div class="re-panel-content">
+                     <pre class="font-mono text-xs whitespace-pre"><code>0x401000: 55 89 E5 83 EC 10 C7 45 FC 00 00 00 00 E8 1E 00 | U......E........
+0x401010: 00 00 8B 45 FC 83 C0 01 89 45 FC EB 0A B8 01 00 | ...E....E.......
+0x401020: 00 00 89 EC 5D C3 90 90 90 90 90 90 90 90 90 90 | ....]...........
+0x401030: 55 89 E5 83 EC 08 8B 45 08 89 44 24 04 8B 45 0C | U......E..D$..E.
+0x401040: 89 04 24 E8 2B 00 00 00 83 C4 08 89 EC 5D C3 90 | ..$..+........].
+</code></pre>
+                </div>
+            </div>
+
+            <div class="re-panel col-span-3 row-span-2">
+                <div class="re-panel-title">Strings</div>
+                <div class="re-panel-content">
+                    <table class="re-table">
+                        <thead>
+                            <tr><th>Address</th><th>String</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>0x402010</td><td>some_string</td></tr>
+                            <tr><td>0x40201C</td><td>Parameter 1: %s\n</td></tr>
+                            <tr><td>0x402030</td><td>Multiple arguments provided.</td></tr>
+                            <tr><td>0x402050</td><td>An error occurred.</td></tr>
+                            <tr><td>0x402068</td><td>Usage: %s &lt;file&gt;</td></tr> </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div> </div> </body>
+</html>
