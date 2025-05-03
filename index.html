@@ -3,119 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RE Team Workspace - Classic</title>
+    <title>RE Toolbox - Classic+</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* --- Classic Windows Style Overrides --- */
-
         body {
-            /* Classic system font, fallback to Segoe UI */
             font-family: Tahoma, 'MS Sans Serif', 'Segoe UI', sans-serif;
-            font-size: 13px; /* Classic font size */
-            background-color: #C0C0C0; /* Standard Windows gray background */
-            color: #000000; /* Black text */
+            font-size: 13px;
+            background-color: #C0C0C0;
+            color: #000000;
+            user-select: none;
         }
 
         /* --- Menu Bar --- */
         .menu-bar {
-            background-color: #C0C0C0; /* Same as body background */
-            height: 28px; /* Slightly taller menu */
+            background-color: #C0C0C0;
+            height: 28px;
             padding: 2px 4px;
-            border-bottom: 1px solid #808080; /* Darker gray bottom border */
+            border-bottom: 1px solid #808080;
             display: flex;
             align-items: center;
         }
         .menu-item {
             padding: 2px 6px;
             margin-right: 2px;
-            cursor: default; /* Default cursor for menu items */
-            border: 1px solid transparent; /* For hover effect */
+            cursor: default;
+            border: 1px solid transparent;
         }
         .menu-item:hover {
-            background-color: #000080; /* Classic Windows highlight blue */
-            color: #FFFFFF; /* White text on hover */
+            background-color: #000080;
+            color: #FFFFFF;
             border: 1px solid #000080;
         }
-        .menu-item-active { /* Style for when a menu is 'open' (not implemented here) */
-             background-color: #e0e0e0;
-             border: 1px solid #808080;
+        .menu-item-active {
+            background-color: #e0e0e0;
+            border: 1px solid #808080;
         }
 
         /* --- Main Layout Area --- */
         .main-layout-container {
-            height: calc(100vh - 28px); /* Full height minus menu bar */
-            padding: 2px; /* Small padding around the grid */
-            background-color: #C0C0C0; /* Match body background */
+            height: calc(100vh - 28px);
+            padding: 2px;
+            background-color: #C0C0C0;
         }
         .main-layout-grid {
              height: 100%;
-             /* Tailwind grid classes will be applied directly */
         }
 
         /* --- Panels/Panes --- */
         .re-panel {
-            background-color: #FFFFFF; /* White panel background */
-            /* Classic 3D border effect */
+            background-color: #FFFFFF;
             border-top: 1px solid #FFFFFF;
             border-left: 1px solid #FFFFFF;
-            border-right: 1px solid #808080; /* Dark gray */
-            border-bottom: 1px solid #808080; /* Dark gray */
-            overflow: hidden; /* Hide overflow, rely on inner content scroll */
+            border-right: 1px solid #808080;
+            border-bottom: 1px solid #808080;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
+            transition: all 0.2s ease;
         }
 
         .re-panel-title {
-            /* Classic window title bar blue */
-            background-color: #000080; /* Navy blue */
-            color: #FFFFFF; /* White text */
+            background-color: #000080;
+            color: #FFFFFF;
             padding: 3px 6px;
             font-weight: bold;
-            font-size: 12px; /* Slightly smaller title font */
+            font-size: 12px;
             border-bottom: 1px solid #000080;
             flex-shrink: 0;
-            cursor: default; /* Indicate it's not directly interactive */
+            cursor: default;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .re-panel-content {
-            padding: 5px; /* Slightly less padding */
+            padding: 5px;
             flex-grow: 1;
-            overflow-y: auto; /* Scroll content vertically */
-            /* Add subtle inset border for content area */
+            overflow-y: auto;
             border-top: 1px solid #808080;
             border-left: 1px solid #808080;
             border-right: 1px solid #FFFFFF;
             border-bottom: 1px solid #FFFFFF;
-            margin: 2px; /* Margin to show the panel border */
+            margin: 2px;
         }
 
         /* --- Table Styling --- */
         .re-table {
             width: 100%;
             border-collapse: collapse;
-            background-color: #FFFFFF; /* Ensure table bg is white */
+            background-color: #FFFFFF;
         }
         .re-table th, .re-table td {
-            border: 1px solid #C0C0C0; /* Lighter gray borders */
-            padding: 3px 5px; /* Adjust padding */
+            border: 1px solid #C0C0C0;
+            padding: 3px 5px;
             text-align: left;
-            font-size: 12px; /* Smaller font in tables */
-            vertical-align: top; /* Align content top */
+            font-size: 12px;
+            vertical-align: top;
         }
         .re-table th {
-            background-color: #C0C0C0; /* Gray header */
-            font-weight: normal; /* Classic headers often not bold */
+            background-color: #C0C0C0;
+            font-weight: normal;
             border-top: 1px solid #FFFFFF;
             border-left: 1px solid #FFFFFF;
             border-right: 1px solid #808080;
             border-bottom: 1px solid #808080;
             padding: 4px 5px;
         }
-        /* Remove zebra striping for a more classic look */
         .re-table tr:nth-child(even) {
             background-color: #FFFFFF;
         }
-        .re-table tr:hover td { /* Subtle hover */
+        .re-table tr:hover td {
              background-color: #E8E8E8;
         }
 
@@ -126,45 +124,43 @@
             margin: 0;
         }
         .re-list li {
-            padding: 2px 4px; /* Tighter padding */
-            border: 1px solid transparent; /* Border for selection highlight */
+            padding: 2px 4px;
+            border: 1px solid transparent;
             font-size: 12px;
             cursor: default;
+            transition: all 0.1s ease;
         }
         .re-list li:hover {
-             /* Classic selection style */
              background-color: #000080;
              color: #FFFFFF;
-             border: 1px dotted #FFFFFF; /* Dotted border inside selection */
+             border: 1px dotted #FFFFFF;
         }
-        /* Style for tree-like structure */
         .re-list .indent-1 { padding-left: 16px; }
         .re-list .indent-2 { padding-left: 28px; }
-        .re-list .icon { /* Placeholder for +/- icons */
+        .re-list .icon {
             display: inline-block;
             width: 12px;
             text-align: center;
             margin-right: 3px;
+            cursor: pointer;
         }
 
-
-        /* --- Scrollbar Styling (Optional, Webkit specific) --- */
-        /* For a more authentic feel, but less cross-browser compatible */
+        /* --- Scrollbar Styling --- */
         ::-webkit-scrollbar {
             width: 16px;
             height: 16px;
         }
         ::-webkit-scrollbar-track {
-            background: #DFDFDF; /* Scrollbar track */
+            background: #DFDFDF;
         }
         ::-webkit-scrollbar-thumb {
-            background-color: #C0C0C0; /* Scrollbar handle */
+            background-color: #C0C0C0;
             border-top: 1px solid #FFFFFF;
             border-left: 1px solid #FFFFFF;
             border-right: 1px solid #808080;
             border-bottom: 1px solid #808080;
         }
-         ::-webkit-scrollbar-button { /* Style the up/down arrows */
+        ::-webkit-scrollbar-button {
             background-color: #C0C0C0;
             border-top: 1px solid #FFFFFF;
             border-left: 1px solid #FFFFFF;
@@ -174,29 +170,125 @@
             height: 16px;
             width: 16px;
         }
-         /* Basic arrow symbols (would ideally use images/SVG for real look) */
         ::-webkit-scrollbar-button:vertical:decrement { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='black'><polygon points='8,4 12,12 4,12'/></svg>"); background-repeat: no-repeat; background-position: center center; }
         ::-webkit-scrollbar-button:vertical:increment { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='black'><polygon points='8,12 12,4 4,4'/></svg>"); background-repeat: no-repeat; background-position: center center; }
-        ::-webkit-scrollbar-button:horizontal:decrement { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='black'><polygon points='12,8 4,12 4,4'/></svg>"); background-repeat: no-repeat; background-position: center center; }
-        ::-webkit-scrollbar-button:horizontal:increment { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='black'><polygon points='4,8 12,12 12,4'/></svg>"); background-repeat: no-repeat; background-position: center center; }
-
 
         /* --- General --- */
-        /* Ensure layout fills height */
         html, body {
             height: 100%;
             margin: 0;
-            overflow: hidden; /* Prevent body scroll */
+            overflow: hidden;
         }
-        /* Monospace font for code/hex */
         .font-mono {
             font-family: Consolas, 'Courier New', monospace;
         }
 
+        /* --- New Interactive Elements --- */
+        .panel-controls span {
+            display: inline-block;
+            width: 16px;
+            height: 14px;
+            text-align: center;
+            margin-left: 2px;
+            cursor: pointer;
+            background-color: #C0C0C0;
+            border-top: 1px solid #FFFFFF;
+            border-left: 1px solid #FFFFFF;
+            border-right: 1px solid #808080;
+            border-bottom: 1px solid #808080;
+        }
+        .panel-controls span:hover {
+            background-color: #000080;
+            color: white;
+        }
+
+        .highlight {
+            background-color: #FFFF00 !important;
+            color: black !important;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { background-color: #FFFF00; }
+            50% { background-color: #FFEE00; }
+            100% { background-color: #FFFF00; }
+        }
+
+        .selected {
+            background-color: #000080 !important;
+            color: white !important;
+        }
+
+        .comment {
+            color: #008000;
+        }
+        .string {
+            color: #A31515;
+        }
+        .keyword {
+            color: #0000FF;
+            font-weight: bold;
+        }
+        .function {
+            color: #795E26;
+        }
+        .number {
+            color: #098658;
+        }
+
+        .resize-handle {
+            width: 5px;
+            background-color: #C0C0C0;
+            cursor: col-resize;
+            transition: background-color 0.2s;
+        }
+        .resize-handle:hover {
+            background-color: #000080;
+        }
+
+        .tab-bar {
+            display: flex;
+            background-color: #C0C0C0;
+            border-bottom: 1px solid #808080;
+        }
+        .tab {
+            padding: 2px 8px;
+            margin-right: 2px;
+            border: 1px solid #808080;
+            border-bottom: none;
+            background-color: #C0C0C0;
+            cursor: default;
+        }
+        .tab.active {
+            background-color: #FFFFFF;
+            border-bottom: 1px solid #FFFFFF;
+        }
+        .tab:hover:not(.active) {
+            background-color: #E0E0E0;
+        }
+
+        .status-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background-color: #C0C0C0;
+            border-top: 1px solid #FFFFFF;
+            display: flex;
+            align-items: center;
+            padding: 0 5px;
+            font-size: 12px;
+        }
+        .status-item {
+            margin-right: 15px;
+        }
     </style>
 </head>
-<body> <div class="menu-bar">
-        <span class="menu-item font-bold"><u>F</u>ile</span> <span class="menu-item"><u>E</u>dit</span>
+<body>
+    <div class="menu-bar">
+        <span class="menu-item font-bold"><u>F</u>ile</span>
+        <span class="menu-item"><u>E</u>dit</span>
         <span class="menu-item"><u>V</u>iew</span>
         <span class="menu-item"><u>A</u>nalysis</span>
         <span class="menu-item"><u>T</u>ools</span>
@@ -207,109 +299,330 @@
     <div class="main-layout-container">
         <div class="main-layout-grid grid grid-cols-12 grid-rows-6 gap-1 h-full">
 
-            <div class="re-panel col-span-2 row-span-6">
-                <div class="re-panel-title">Project Files</div>
+            <!-- Left sidebar - Project Files -->
+            <div class="re-panel col-span-2 row-span-6" id="project-files">
+                <div class="re-panel-title">
+                    Project Files
+                    <div class="panel-controls">
+                        <span title="Refresh">⟳</span>
+                        <span title="Collapse All">−</span>
+                    </div>
+                </div>
                 <div class="re-panel-content">
-                    <ul class="re-list">
-                        <li><span class="icon">[-]</span>binary_executable</li>
-                        <li class="indent-1"><span class="icon">[+]</span>Headers</li>
-                        <li class="indent-1"><span class="icon">[-]</span>Sections</li>
+                    <ul class="re-list" id="file-tree">
+                        <li><span class="icon" onclick="toggleCollapse(this)">[-]</span>binary_executable</li>
+                        <li class="indent-1"><span class="icon" onclick="toggleCollapse(this)">[+]</span>Headers</li>
+                        <li class="indent-1"><span class="icon" onclick="toggleCollapse(this)">[-]</span>Sections</li>
                         <li class="indent-2"><span class="icon"> </span>.text</li>
                         <li class="indent-2"><span class="icon"> </span>.data</li>
                         <li class="indent-2"><span class="icon"> </span>.bss</li>
                         <li class="indent-2"><span class="icon"> </span>.reloc</li>
-                        <li class="indent-1"><span class="icon">[+]</span>Imports</li>
-                        <li class="indent-1"><span class="icon">[+]</span>Exports</li>
-                        <li><span class="icon">[-]</span>library_1.dll</li>
-                        <li><span class="icon">[-]</span>library_2.so</li>
+                        <li class="indent-1"><span class="icon" onclick="toggleCollapse(this)">[+]</span>Imports</li>
+                        <li class="indent-1"><span class="icon" onclick="toggleCollapse(this)">[+]</span>Exports</li>
+                        <li><span class="icon" onclick="toggleCollapse(this)">[-]</span>library_1.dll</li>
+                        <li><span class="icon" onclick="toggleCollapse(this)">[-]</span>library_2.so</li>
                     </ul>
                 </div>
             </div>
 
-            <div class="re-panel col-span-5 row-span-4">
-                <div class="re-panel-title">Disassembly: .user section</div>
+            <!-- Main disassembly view with tabs -->
+            <div class="re-panel col-span-5 row-span-4" id="disassembly-panel">
+                <div class="re-panel-title">
+                    <div class="tab-bar">
+                        <div class="tab active" onclick="switchTab(this, 'disassembly-content')">Disassembly</div>
+                        <div class="tab" onclick="switchTab(this, 'graph-content')">Graph View</div>
+                        <div class="tab" onclick="switchTab(this, 'pseudocode-content')">Pseudocode</div>
+                    </div>
+                </div>
                 <div class="re-panel-content">
-                    <table class="re-table font-mono text-xs">
+                    <div id="disassembly-content">
+                        <table class="re-table font-mono text-xs" id="disassembly-table">
+                            <thead>
+                                <tr><th>Address</th><th>Bytes</th><th>Instruction</th><th>Comment</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr onclick="selectRow(this, '0x401000')"><td>0x401000</td><td>55</td><td>push ebp</td><td class="comment">; Entry point</td></tr>
+                                <tr onclick="selectRow(this, '0x401001')"><td>0x401001</td><td>89 E5</td><td>mov ebp, esp</td><td></td></tr>
+                                <tr onclick="selectRow(this, '0x401003')"><td>0x401003</td><td>83 EC 10</td><td>sub esp, 0x10</td><td class="comment">; Allocate stack space</td></tr>
+                                <tr onclick="selectRow(this, '0x401006')"><td>0x401006</td><td>C7 45 FC 00</td><td>mov dword [ebp-0x4], 0x0</td><td class="comment">; Initialize variable</td></tr>
+                                <tr onclick="selectRow(this, '0x40100D')"><td>0x40100D</td><td>E8 1E 00 00 00</td><td>call 0x401030</td><td class="comment">; Call function_xyz</td></tr>
+                                <tr onclick="selectRow(this, '0x401012')"><td>0x401012</td><td>8B 45 FC</td><td>mov eax, [ebp-0x4]</td><td></td></tr>
+                                <tr onclick="selectRow(this, '0x401015')"><td>0x401015</td><td>83 C0 01</td><td>add eax, 0x1</td><td></td></tr>
+                                <tr onclick="selectRow(this, '0x401018')"><td>0x401018</td><td>89 45 FC</td><td>mov [ebp-0x4], eax</td><td></td></tr>
+                                <tr onclick="selectRow(this, '0x40101B')"><td>0x40101B</td><td>EB 0A</td><td>jmp 0x401027</td><td></td></tr>
+                                <tr onclick="selectRow(this, '0x40101D')"><td>0x40101D</td><td>B8 01 00 00 00</td><td>mov eax, 0x1</td><td class="comment">; Return value</td></tr>
+                                <tr onclick="selectRow(this, '0x401022')"><td>0x401022</td><td>89 EC</td><td>mov esp, ebp</td><td></td></tr>
+                                <tr onclick="selectRow(this, '0x401024')"><td>0x401024</td><td>5D</td><td>pop ebp</td><td></td></tr>
+                                <tr onclick="selectRow(this, '0x401025')"><td>0x401025</td><td>C3</td><td>ret</td><td></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="graph-content" style="display: none;">
+                        <div style="text-align: center; padding: 20px;">
+                            <div style="display: inline-block; border: 1px solid #808080; padding: 10px; background: white; margin: 5px;">
+                                <div style="background: #000080; color: white; padding: 2px 5px; margin-bottom: 5px;">Entry Point</div>
+                                <div>push ebp</div>
+                                <div>mov ebp, esp</div>
+                                <div>sub esp, 0x10</div>
+                            </div>
+                            <div style="margin: 10px;">↓</div>
+                            <div style="display: inline-block; border: 1px solid #808080; padding: 10px; background: white; margin: 5px;">
+                                <div style="background: #000080; color: white; padding: 2px 5px; margin-bottom: 5px;">Function Body</div>
+                                <div>mov dword [ebp-0x4], 0x0</div>
+                                <div>call 0x401030</div>
+                            </div>
+                            <div style="margin: 10px;">↓</div>
+                            <div style="display: inline-block; border: 1px solid #808080; padding: 10px; background: white; margin: 5px;">
+                                <div style="background: #000080; color: white; padding: 2px 5px; margin-bottom: 5px;">Return</div>
+                                <div>mov eax, 0x1</div>
+                                <div>mov esp, ebp</div>
+                                <div>pop ebp</div>
+                                <div>ret</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="pseudocode-content" style="display: none;">
+                        <pre class="font-mono text-xs"><code>int main() {
+    int local_var = 0;
+    function_xyz();
+    return 1;
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decompiler view -->
+            <div class="re-panel col-span-5 row-span-4" id="decompiler-panel">
+                <div class="re-panel-title">
+                    Decompiler
+                    <div class="panel-controls">
+                        <span title="Refresh">⟳</span>
+                        <span title="Rename Variable">V</span>
+                        <span title="Change Type">T</span>
+                    </div>
+                </div>
+                <div class="re-panel-content">
+                    <pre class="font-mono text-xs whitespace-pre-wrap" id="decompiler-code"><code>// Decompiled C-like code
+<span class="keyword">int</span> <span class="function">main</span>(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv) {
+    <span class="keyword">int</span> local_var_1;
+
+    local_var_1 = <span class="number">0</span>;
+    <span class="function">function_xyz</span>(<span class="string">"some_string"</span>, argc); <span class="comment">// Potential call</span>
+
+    <span class="keyword">while</span> (local_var_1 &lt; <span class="number">10</span>) {
+        <span class="keyword">if</span> (<span class="function">check_condition</span>(local_var_1)) {
+             <span class="keyword">break</span>;
+        }
+        local_var_1 = local_var_1 + <span class="number">1</span>;
+    }
+
+    <span class="keyword">return</span> <span class="number">1</span>; <span class="comment">// Default return</span>
+}
+
+<span class="keyword">void</span> <span class="function">function_xyz</span>(<span class="keyword">char</span> *param_1, <span class="keyword">int</span> param_2) {
+    <span class="comment">// ... function body ...</span>
+    <span class="function">printf</span>(<span class="string">"Parameter 1: %s\n"</span>, param_1);
+    <span class="keyword">if</span> (param_2 &gt; <span class="number">1</span>) {
+        <span class="function">puts</span>(<span class="string">"Multiple arguments provided."</span>);
+    }
+    <span class="comment">// ... more code ...</span>
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Hex view -->
+            <div class="re-panel col-span-7 row-span-2" id="hex-view-panel">
+                <div class="re-panel-title">
+                    Hex View
+                    <div class="panel-controls">
+                        <span title="Go to address">G</span>
+                        <span title="Find">F</span>
+                        <span title="Edit">E</span>
+                    </div>
+                </div>
+                <div class="re-panel-content">
+                    <pre class="font-mono text-xs whitespace-pre" id="hex-view"><code>0x401000: <span id="hex-401000" class="highlight">55</span> 89 E5 83 EC 10 C7 45 FC 00 00 00 00 E8 1E 00 | U......E........
+0x401010: 00 00 8B 45 FC 83 C0 01 89 45 FC EB 0A B8 01 00 | ...E....E.......
+0x401020: 00 00 89 EC 5D C3 90 90 90 90 90 90 90 90 90 90 | ....]...........
+0x401030: 55 89 E5 83 EC 08 8B 45 08 89 44 24 04 8B 45 0C | U......E..D$..E.
+0x401040: 89 04 24 E8 2B 00 00 00 83 C4 08 89 EC 5D C3 90 | ..$..+........].</code></pre>
+                </div>
+            </div>
+
+            <!-- Strings view -->
+            <div class="re-panel col-span-3 row-span-2" id="strings-panel">
+                <div class="re-panel-title">
+                    Strings
+                    <div class="panel-controls">
+                        <span title="Find references">R</span>
+                        <span title="Export">E</span>
+                    </div>
+                </div>
+                <div class="re-panel-content">
+                    <table class="re-table" id="strings-table">
                         <thead>
-                            <tr><th>Address</th><th>Bytes</th><th>Instruction</th><th>Comment</th></tr>
+                            <tr><th>Address</th><th>String</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td>0x401000</td><td>55</td><td>push ebp</td><td>; Entry point</td></tr>
-                            <tr><td>0x401001</td><td>89 E5</td><td>mov ebp, esp</td><td></td></tr>
-                            <tr><td>0x401003</td><td>83 EC 10</td><td>sub esp, 0x10</td><td>; Allocate stack space</td></tr>
-                            <tr><td>0x401006</td><td>C7 45 FC 00</td><td>mov dword [ebp-0x4], 0x0</td><td>; Initialize variable</td></tr>
-                            <tr><td>0x40100D</td><td>E8 1E 00 00 00</td><td>call 0x401030</td><td>; Call function_xyz</td></tr>
-                            <tr><td>0x401012</td><td>8B 45 FC</td><td>mov eax, [ebp-0x4]</td><td></td></tr>
-                            <tr><td>0x401015</td><td>83 C0 01</td><td>add eax, 0x1</td><td></td></tr>
-                            <tr><td>0x401018</td><td>89 45 FC</td><td>mov [ebp-0x4], eax</td><td></td></tr>
-                            <tr><td>0x40101B</td><td>EB 0A</td><td>jmp 0x401027</td><td></td></tr>
-                            <tr><td>0x40101D</td><td>B8 01 00 00 00</td><td>mov eax, 0x1</td><td>; Return value</td></tr>
-                            <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                            <tr onclick="selectString(this, '0x402010')"><td>0x402010</td><td>some_string</td></tr>
+                            <tr onclick="selectString(this, '0x40201C')"><td>0x40201C</td><td>Parameter 1: %s\n</td></tr>
+                            <tr onclick="selectString(this, '0x402030')"><td>0x402030</td><td>Multiple arguments provided.</td></tr>
+                            <tr onclick="selectString(this, '0x402050')"><td>0x402050</td><td>An error occurred.</td></tr>
+                            <tr onclick="selectString(this, '0x402068')"><td>0x402068</td><td>Usage: %s &lt;file&gt;</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <div class="re-panel col-span-5 row-span-4">
-                <div class="re-panel-title">Decompiler: about()</div>
-                <div class="re-panel-content">
-                    <pre class="font-mono text-xs whitespace-pre-wrap"><code>// Decompiled C-like code
-int main(int argc, char **argv) {
-    int local_var_1;
+        </div>
+    </div>
 
-    local_var_1 = 0;
-    function_xyz("some_string", argc); // Potential call
+    <div class="status-bar">
+        <div class="status-item">Ready</div>
+        <div class="status-item">Address: <span id="current-address">0x00000000</span></div>
+        <div class="status-item">Mode: <span id="current-mode">x86</span></div>
+    </div>
 
-    while (local_var_1 < 10) {
-        if (check_condition(local_var_1)) {
-             break;
+    <script>
+        // Global state
+        let currentAddress = '0x00000000';
+        let selectedRow = null;
+        let selectedString = null;
+
+        // Toggle tree node collapse/expand
+        function toggleCollapse(element) {
+            const parentLi = element.parentElement;
+            const wasOpen = element.textContent === '[-]';
+            
+            // Toggle the icon
+            element.textContent = wasOpen ? '[+]' : '[-]';
+            
+            // Find all child items (indented more than this one)
+            const currentIndent = parentLi.className.includes('indent-') ? 
+                parseInt(parentLi.className.split('indent-')[1]) : 0;
+            let nextElement = parentLi.nextElementSibling;
+            
+            while (nextElement) {
+                const nextIndent = nextElement.className.includes('indent-') ? 
+                    parseInt(nextElement.className.split('indent-')[1]) : 0;
+                
+                if (nextIndent > currentIndent) {
+                    nextElement.style.display = wasOpen ? 'none' : 'list-item';
+                    nextElement = nextElement.nextElementSibling;
+                } else {
+                    break;
+                }
+            }
         }
-        local_var_1 = local_var_1 + 1;
-    }
 
-    return 1; // Default return
-}
+        // Select a row in disassembly
+        function selectRow(row, address) {
+            if (selectedRow) {
+                selectedRow.classList.remove('selected');
+            }
+            row.classList.add('selected');
+            selectedRow = row;
+            currentAddress = address;
+            document.getElementById('current-address').textContent = address;
+            
+            // Highlight corresponding hex bytes
+            document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
+            if (address === '0x401000') {
+                document.getElementById('hex-401000').classList.add('highlight');
+            }
+            
+            // Update decompiler to show this function
+            // In a real app, this would fetch the correct decompilation
+        }
 
-void function_xyz(char *param_1, int param_2) {
-    // ... function body ...
-    printf("Parameter 1: %s\n", param_1);
-    if (param_2 > 1) {
-        puts("Multiple arguments provided.");
-    }
-    // ... more code ...
-}
-                </code></pre>
-                </div>
-            </div>
+        // Select a string in strings table
+        function selectString(row, address) {
+            if (selectedString) {
+                selectedString.classList.remove('selected');
+            }
+            row.classList.add('selected');
+            selectedString = row;
+            currentAddress = address;
+            document.getElementById('current-address').textContent = address;
+            
+            // In a real app, you might search for references to this string
+        }
 
-            <div class="re-panel col-span-7 row-span-2">
-                <div class="re-panel-title">Hex View: 0x401000</div>
-                <div class="re-panel-content">
-                     <pre class="font-mono text-xs whitespace-pre"><code>0x401000: 55 89 E5 83 EC 10 C7 45 FC 00 00 00 00 E8 1E 00 | U......E........
-0x401010: 00 00 8B 45 FC 83 C0 01 89 45 FC EB 0A B8 01 00 | ...E....E.......
-0x401020: 00 00 89 EC 5D C3 90 90 90 90 90 90 90 90 90 90 | ....]...........
-0x401030: 55 89 E5 83 EC 08 8B 45 08 89 44 24 04 8B 45 0C | U......E..D$..E.
-0x401040: 89 04 24 E8 2B 00 00 00 83 C4 08 89 EC 5D C3 90 | ..$..+........].
-</code></pre>
-                </div>
-            </div>
+        // Switch between tabs in disassembly panel
+        function switchTab(tabElement, contentId) {
+            // Hide all content divs
+            document.querySelectorAll('#disassembly-content, #graph-content, #pseudocode-content').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Show selected content
+            document.getElementById(contentId).style.display = 'block';
+            
+            // Update tab classes
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            tabElement.classList.add('active');
+        }
 
-            <div class="re-panel col-span-3 row-span-2">
-                <div class="re-panel-title">Strings</div>
-                <div class="re-panel-content">
-                    <table class="re-table">
-                        <thead>
-                            <tr><th>Address</th><th>String</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>0x402010</td><td>some_string</td></tr>
-                            <tr><td>0x40201C</td><td>Parameter 1: %s\n</td></tr>
-                            <tr><td>0x402030</td><td>Multiple arguments provided.</td></tr>
-                            <tr><td>0x402050</td><td>An error occurred.</td></tr>
-                            <tr><td>0x402068</td><td>Usage: %s &lt;file&gt;</td></tr> </tbody>
-                    </table>
-                </div>
-            </div>
+        // Simulate loading a binary
+        function loadSampleBinary() {
+            // This would be much more complex in a real app
+            document.getElementById('current-address').textContent = '0x00401000';
+            document.getElementById('current-mode').textContent = 'x86';
+            
+            // Show a fake "loading" effect
+            const statusBar = document.querySelector('.status-bar .status-item');
+            statusBar.textContent = 'Loading binary_executable...';
+            setTimeout(() => {
+                statusBar.textContent = 'Ready';
+            }, 1500);
+        }
 
-        </div> </div> </body>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSampleBinary();
+            
+            // Add click handlers to all panel controls
+            document.querySelectorAll('.panel-controls span').forEach(control => {
+                control.addEventListener('click', () => {
+                    alert(`Feature "${control.title}" would be implemented in a real application`);
+                });
+            });
+            
+            // Add double-click handler to file tree
+            document.querySelectorAll('#file-tree li').forEach(item => {
+                item.addEventListener('dblclick', () => {
+                    const text = item.textContent.trim();
+                    if (text === '.text') {
+                        selectRow(document.querySelector('#disassembly-table tr'), '0x401000');
+                    }
+                    alert(`Would open ${text} in a real application`);
+                });
+            });
+        });
+
+        // Make panels resizable (simplified version)
+        // In a real app, you'd want a more robust solution
+        document.addEventListener('mousedown', function(e) {
+            if (e.target.classList.contains('resize-handle')) {
+                const panel = e.target.previousElementSibling;
+                const startX = e.clientX;
+                const startWidth = parseInt(document.defaultView.getComputedStyle(panel).width, 10);
+                
+                function doDrag(e) {
+                    panel.style.width = (startWidth + e.clientX - startX) + 'px';
+                }
+                
+                function stopDrag() {
+                    document.documentElement.removeEventListener('mousemove', doDrag, false);
+                    document.documentElement.removeEventListener('mouseup', stopDrag, false);
+                }
+                
+                document.documentElement.addEventListener('mousemove', doDrag, false);
+                document.documentElement.addEventListener('mouseup', stopDrag, false);
+            }
+        });
+    </script>
+</body>
 </html>
