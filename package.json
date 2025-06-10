@@ -25,6 +25,9 @@
       "react-app/jest"
     ]
   },
+  {
+  "homepage": "https://thefunkybunch.github.io/",
+  },
   "browserslist": {
     "production": [
       ">0.2%",
